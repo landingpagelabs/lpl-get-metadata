@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get Metadata, check OG image, meta title and description from any URL</title>
+  <title>Pull Metadata, check OG image, meta title and description from any URL</title>
   <meta name="description" content="Paste any URL to instantly see its Open Graph image, meta title, and meta description. Free tool for marketers, SEOs, and developers to debug social sharing previews.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#7c3aed">
@@ -12,19 +12,19 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Get Metadata, check OG image, meta title and description from any URL">
+  <meta property="og:title" content="Pull Metadata, check OG image, meta title and description from any URL">
   <meta property="og:description" content="Paste a URL and instantly see its Open Graph image, meta title, and meta description. Free, no signup.">
   <meta property="og:url" content="https://pullmetadata.com/">
   <meta property="og:image" content="https://pullmetadata.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Screenshot of the Get Metadata tool showing an OG image preview, meta title, and meta description extracted from a website URL">
-  <meta property="og:site_name" content="Get Metadata">
+  <meta property="og:site_name" content="Pull Metadata">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Get Metadata, check OG image, meta title and description from any URL">
+  <meta name="twitter:title" content="Pull Metadata, check OG image, meta title and description from any URL">
   <meta name="twitter:description" content="Paste a URL and instantly see its Open Graph image, meta title, and meta description. Free, no signup.">
   <meta name="twitter:image" content="https://pullmetadata.com/og-image.jpg">
   <meta name="twitter:image:alt" content="Screenshot of the Get Metadata tool showing an OG image preview, meta title, and meta description extracted from a website URL">
@@ -45,7 +45,7 @@
       {
         "@type": "WebApplication",
         "@id": "https://pullmetadata.com/#app",
-        "name": "Get Metadata",
+        "name": "Pull Metadata",
         "url": "https://pullmetadata.com/",
         "description": "Paste any URL to instantly see its Open Graph image, meta title, and meta description. Free tool for marketers, SEOs, and developers.",
         "applicationCategory": "DeveloperApplication",
@@ -58,7 +58,7 @@
         "@type": "WebSite",
         "@id": "https://pullmetadata.com/#site",
         "url": "https://pullmetadata.com/",
-        "name": "Get Metadata",
+        "name": "Pull Metadata",
         "publisher": { "@type": "Organization", "name": "Landing Page Labs", "url": "https://www.landingpagelabs.co" }
       },
       {
@@ -98,14 +98,16 @@
 <body>
   <nav class="site-nav" aria-label="Primary">
     <div class="site-nav-inner">
-      <a class="site-nav-brand" href="/" aria-label="Get Metadata home">
+      <a class="site-nav-brand" href="/" aria-label="Pull Metadata home">
         <svg class="brand-mark" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
           <rect width="24" height="24" rx="5" fill="#18181b"/>
-          <rect x="3.5" y="9" width="17" height="6" rx="2" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
-          <rect x="5.5" y="11" width="5" height="2" rx="0.75" fill="#7c3aed" opacity="0.5"/>
-          <circle cx="17" cy="12" r="2" fill="#7c3aed"/>
+          <path d="M10 8.5H7.5a2.5 2.5 0 0 0 0 5H10" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M14 8.5h2.5a2.5 2.5 0 0 1 0 5H14" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <line x1="10" y1="11" x2="14" y2="11" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" opacity="0.35"/>
+          <path d="M12 16v3" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M9.5 17.5l2.5 2 2.5-2" stroke="#7c3aed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
-        <span class="brand-text"><span class="brand-text-light">Get</span> <span class="brand-text-strong">Metadata</span></span>
+        <span class="brand-text"><span class="brand-text-light">Pull</span> <span class="brand-text-strong">Metadata</span></span>
       </a>
       <div class="site-nav-links">
         <a href="/blog" class="site-nav-link">Blog</a>
@@ -117,7 +119,7 @@
 
     <!-- Hero -->
     <header class="header">
-      <h1>Get any URL's OG image, title and description</h1>
+      <h1>Pull any URL's OG image, title and description</h1>
       <p>Paste a link and instantly see how it looks when shared on LinkedIn, Slack, and X.</p>
       <ul class="trust-pills" aria-label="What we do not do">
         <li>Free, no signup</li>
@@ -148,7 +150,7 @@
         <div id="suggestions" class="suggestions" role="listbox" aria-label="URL suggestions"></div>
       </div>
       <button type="submit" id="check-btn">
-        <span id="btn-text">Get</span>
+        <span id="btn-text">Pull</span>
         <svg id="btn-loader" class="btn-loader" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" focusable="false" aria-hidden="true">
           <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
         </svg>
