@@ -16,19 +16,15 @@ const previewDomain = document.getElementById('preview-domain');
 
 // Meta cards
 const valueTitle = document.getElementById('value-title');
-const badgeTitle = document.getElementById('badge-title');
 const charLabelTitle = document.getElementById('char-label-title');
 const charFillTitle = document.getElementById('char-fill-title');
 const copyTitleBtn = document.getElementById('copy-title');
 
 const valueDesc = document.getElementById('value-desc');
-const badgeDesc = document.getElementById('badge-desc');
 const charLabelDesc = document.getElementById('char-label-desc');
 const charFillDesc = document.getElementById('char-fill-desc');
 const copyDescBtn = document.getElementById('copy-desc');
 
-const valueOgImage = document.getElementById('value-og-image');
-const badgeOgImage = document.getElementById('badge-og-image');
 const ogImageDims = document.getElementById('og-image-dims');
 const previewImgActions = document.getElementById('preview-img-actions');
 const downloadImgBtn = document.getElementById('download-img');
@@ -37,16 +33,8 @@ const copyImgUrlBtn = document.getElementById('copy-img-url');
 // ─── Suggestions ───────────────────────────────────────────────────────────
 
 const RECENT_KEY = 'gm_recent_urls';
-const MAX_RECENT = 12;
-
-const POPULAR = [
-  'stripe.com', 'shopify.com', 'notion.so', 'linear.app', 'vercel.com',
-  'github.com', 'figma.com', 'webflow.com', 'framer.com', 'squarespace.com',
-  'hubspot.com', 'mailchimp.com', 'intercom.com', 'salesforce.com',
-  'zapier.com', 'airtable.com', 'monday.com', 'clickup.com', 'asana.com',
-  'slack.com', 'zoom.us', 'canva.com', 'wix.com', 'wordpress.com',
-  'netflix.com', 'airbnb.com', 'amazon.com', 'apple.com', 'linkedin.com',
-];
+const MAX_RECENT = 10;
+const TLDS = ['.com', '.co', '.io', '.net', '.org'];
 
 function getRecent() {
   try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch { return []; }
@@ -62,15 +50,8 @@ function saveRecent(url) {
 
 function removeRecent(url) {
   try {
-    const list = getRecent().filter(u => u !== url);
-    localStorage.setItem(RECENT_KEY, JSON.stringify(list));
+    localStorage.setItem(RECENT_KEY, JSON.stringify(getRecent().filter(u => u !== url)));
   } catch {}
-}
-
-function matchesTerm(candidate, term) {
-  const t = term.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '');
-  const c = candidate.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '');
-  return c.startsWith(t) || c.includes(t);
 }
 
 let activeIndex = -1;
@@ -84,84 +65,93 @@ function closeSuggestions() {
 }
 
 function setActive(index) {
-  const items = suggestionsEl.querySelectorAll('.suggestion-item');
-  items.forEach((el, i) => el.classList.toggle('active', i === index));
+  suggestionsEl.querySelectorAll('.suggestion-item').forEach((el, i) =>
+    el.classList.toggle('active', i === index)
+  );
   activeIndex = index;
 }
 
-function buildSuggestions(term) {
-  const raw = term.trim().replace(/^https?:\/\//, '').replace(/^www\./, '');
+function makeSuggestionRow(display, value, icon, onRemove) {
+  const row = document.createElement('div');
+  row.className = 'suggestion-item';
+  row.setAttribute('role', 'option');
+  row.dataset.url = value;
 
-  const recent = getRecent();
-  const matchedRecent = raw
-    ? recent.filter(u => matchesTerm(u, raw))
-    : recent.slice(0, 5);
+  const ic = document.createElement('span');
+  ic.className = 'suggestion-icon';
+  ic.innerHTML = icon;
 
-  const matchedPopular = POPULAR.filter(p => {
-    if (!raw) return true;
-    if (!matchesTerm(p, raw)) return false;
-    // don't duplicate if already in recent
-    return !matchedRecent.some(r => r.replace(/^https?:\/\//, '').replace(/^www\./, '').startsWith(p));
-  }).slice(0, raw ? 6 : 4);
+  const lbl = document.createElement('span');
+  lbl.className = 'suggestion-label';
+  lbl.textContent = display;
 
-  if (!matchedRecent.length && !matchedPopular.length) return closeSuggestions();
+  row.appendChild(ic);
+  row.appendChild(lbl);
 
+  if (onRemove) {
+    const rm = document.createElement('button');
+    rm.className = 'suggestion-remove';
+    rm.type = 'button';
+    rm.setAttribute('aria-label', `Remove ${display} from history`);
+    rm.textContent = '×';
+    rm.addEventListener('click', e => { e.stopPropagation(); onRemove(); });
+    row.appendChild(rm);
+  }
+
+  row.addEventListener('mousedown', e => { e.preventDefault(); selectSuggestion(value); });
+  return row;
+}
+
+const ICON_CLOCK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+const ICON_GLOBE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>';
+
+function buildSuggestions(value) {
+  const raw = value.trim().replace(/^https?:\/\//i, '').replace(/^www\./i, '');
   const frag = document.createDocumentFragment();
   currentItems = [];
 
-  function addSection(label, items, isRecent) {
-    if (!items.length) return;
+  if (!raw) {
+    // Empty input — show recent URLs if any
+    const recent = getRecent().slice(0, 6);
+    if (!recent.length) return closeSuggestions();
     const heading = document.createElement('div');
     heading.className = 'suggestion-section-label';
-    heading.textContent = label;
+    heading.textContent = 'Recent';
     frag.appendChild(heading);
-
-    items.forEach(url => {
-      const display = url.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '');
-      const row = document.createElement('div');
-      row.className = 'suggestion-item';
-      row.setAttribute('role', 'option');
-      row.dataset.url = url;
-
-      const icon = document.createElement('span');
-      icon.className = 'suggestion-icon';
-      icon.innerHTML = isRecent
-        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
-        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
-
-      const lbl = document.createElement('span');
-      lbl.className = 'suggestion-label';
-      lbl.textContent = display;
-
-      row.appendChild(icon);
-      row.appendChild(lbl);
-
-      if (isRecent) {
-        const rm = document.createElement('button');
-        rm.className = 'suggestion-remove';
-        rm.type = 'button';
-        rm.setAttribute('aria-label', `Remove ${display} from history`);
-        rm.textContent = '×';
-        rm.addEventListener('click', e => {
-          e.stopPropagation();
-          removeRecent(url);
-          openSuggestions(urlInput.value);
-        });
-        row.appendChild(rm);
-      }
-
-      row.addEventListener('mousedown', e => {
-        e.preventDefault();
-        selectSuggestion(url);
+    recent.forEach(url => {
+      const display = url.replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/$/, '');
+      const row = makeSuggestionRow(display, url, ICON_CLOCK, () => {
+        removeRecent(url);
+        buildSuggestions(urlInput.value);
       });
-
+      frag.appendChild(row);
+      currentItems.push(row);
+    });
+  } else if (!raw.includes('.')) {
+    // No dot yet — suggest TLD completions
+    TLDS.forEach(tld => {
+      const display = raw + tld;
+      const row = makeSuggestionRow(display, display, ICON_GLOBE, null);
+      frag.appendChild(row);
+      currentItems.push(row);
+    });
+  } else {
+    // Has a dot — match against recent
+    const matched = getRecent().filter(u => {
+      const c = u.replace(/^https?:\/\//i, '').replace(/^www\./i, '').toLowerCase();
+      return c.startsWith(raw.toLowerCase()) || c.includes(raw.toLowerCase());
+    }).slice(0, 6);
+    if (!matched.length) return closeSuggestions();
+    matched.forEach(url => {
+      const display = url.replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/$/, '');
+      const row = makeSuggestionRow(display, url, ICON_CLOCK, () => {
+        removeRecent(url);
+        buildSuggestions(urlInput.value);
+      });
       frag.appendChild(row);
       currentItems.push(row);
     });
   }
-
-  addSection('Recent', matchedRecent, true);
-  addSection('Popular', matchedPopular, false);
 
   suggestionsEl.innerHTML = '';
   suggestionsEl.appendChild(frag);
@@ -170,12 +160,8 @@ function buildSuggestions(term) {
   activeIndex = -1;
 }
 
-function openSuggestions(value) {
-  buildSuggestions(value || '');
-}
-
-function selectSuggestion(url) {
-  const display = url.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '');
+function selectSuggestion(value) {
+  const display = value.replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/$/, '');
   urlInput.value = display;
   closeSuggestions();
   urlInput.focus();
@@ -230,13 +216,6 @@ function normalizeUrl(raw) {
   if (!s) return '';
   if (/^https?:\/\//i.test(s)) return s;
   return 'https://' + s;
-}
-
-function getCharBadge(len, min, max) {
-  if (len === 0) return { cls: 'badge-missing', label: 'Missing' };
-  if (len < min) return { cls: 'badge-warn', label: `${len} chars` };
-  if (len > max) return { cls: 'badge-warn', label: `${len} chars` };
-  return { cls: 'badge-good', label: `${len} chars` };
 }
 
 function setCharBar(fillEl, labelEl, len, min, max) {
@@ -323,34 +302,22 @@ function renderResults(data) {
     previewImgMissing.style.display = 'flex';
   }
 
-  // Title card
-  const titleLen = title.length;
-  const titleBadge = getCharBadge(titleLen, 50, 60);
-  valueTitle.textContent = title || 'No meta title found';
+  // Title
+  valueTitle.textContent = title || 'No page title found';
   valueTitle.classList.toggle('missing', !title);
-  badgeTitle.textContent = titleBadge.label;
-  badgeTitle.className = 'meta-badge ' + titleBadge.cls;
-  setCharBar(charFillTitle, charLabelTitle, titleLen, 50, 60);
+  setCharBar(charFillTitle, charLabelTitle, title.length, 50, 60);
   copyTitleBtn.style.display = title ? '' : 'none';
   copyTitleBtn.onclick = () => copyText(title, copyTitleBtn);
 
-  // Description card
-  const descLen = desc.length;
-  const descBadge = getCharBadge(descLen, 150, 160);
+  // Description
   valueDesc.textContent = desc || 'No meta description found';
   valueDesc.classList.toggle('missing', !desc);
-  badgeDesc.textContent = descBadge.label;
-  badgeDesc.className = 'meta-badge ' + descBadge.cls;
-  setCharBar(charFillDesc, charLabelDesc, descLen, 150, 160);
+  setCharBar(charFillDesc, charLabelDesc, desc.length, 150, 160);
   copyDescBtn.style.display = desc ? '' : 'none';
   copyDescBtn.onclick = () => copyText(desc, copyDescBtn);
 
   // Link preview image
   if (ogImage) {
-    valueOgImage.textContent = ogImage;
-    valueOgImage.classList.remove('missing');
-    badgeOgImage.textContent = 'Found';
-    badgeOgImage.className = 'meta-badge badge-good';
     previewImgActions.style.display = '';
     downloadImgBtn.onclick = () => downloadImage(ogImage);
     copyImgUrlBtn.onclick = () => copyText(ogImage, copyImgUrlBtn);
@@ -358,10 +325,6 @@ function renderResults(data) {
       ogImageDims.textContent = dims ? `${dims.w}×${dims.h} px` : '';
     });
   } else {
-    valueOgImage.textContent = 'No link preview image found';
-    valueOgImage.classList.add('missing');
-    badgeOgImage.textContent = 'Missing';
-    badgeOgImage.className = 'meta-badge badge-missing';
     previewImgActions.style.display = 'none';
     ogImageDims.textContent = '';
   }
