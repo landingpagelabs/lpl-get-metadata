@@ -34,7 +34,7 @@ const MAX_BYTES = 20 * 1024 * 1024;
 
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
-  const allowed = /^https:\/\/(?:[a-z0-9-]+\.)?getmetadata\.com$|^https:\/\/[a-z0-9-]+-[a-z0-9]+\.vercel\.app$/i;
+  const allowed = /^https:\/\/(?:[a-z0-9-]+\.)?pullmetadata.com$|^https:\/\/[a-z0-9-]+-[a-z0-9]+\.vercel\.app$/i;
   if (allowed.test(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
@@ -63,7 +63,7 @@ module.exports = async function handler(req, res) {
   try {
     const upstream = await fetch(targetUrl, {
       signal: controller.signal,
-      headers: { 'User-Agent': 'GetMetadata Bot/1.0 (+https://getmetadata.com)' },
+      headers: { 'User-Agent': 'GetMetadata Bot/1.0 (+https://pullmetadata.com)' },
     });
 
     const contentType = upstream.headers.get('content-type') || '';

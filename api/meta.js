@@ -47,7 +47,7 @@ async function safeFetch(url, timeoutMs = 15000, maxBytes = 10 * 1024 * 1024) {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'GetMetadata Bot/1.0 (+https://getmetadata.com)',
+        'User-Agent': 'GetMetadata Bot/1.0 (+https://pullmetadata.com)',
         'Accept': 'text/html,application/xhtml+xml,*/*',
       },
       redirect: 'follow',
@@ -149,7 +149,7 @@ function extractRobots(html) {
 module.exports = async function handler(req, res) {
   // CORS — restrict to known origins
   const origin = req.headers.origin || '';
-  const allowed = /^https:\/\/(?:[a-z0-9-]+\.)?getmetadata\.com$|^https:\/\/[a-z0-9-]+-[a-z0-9]+\.vercel\.app$/i;
+  const allowed = /^https:\/\/(?:[a-z0-9-]+\.)?pullmetadata.com$|^https:\/\/[a-z0-9-]+-[a-z0-9]+\.vercel\.app$/i;
   if (allowed.test(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
