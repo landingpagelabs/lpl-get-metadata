@@ -13,8 +13,6 @@ const suggestionsEl = document.getElementById('suggestions');
 const previewImg = document.getElementById('preview-img');
 const previewImgMissing = document.getElementById('preview-img-missing');
 const previewDomain = document.getElementById('preview-domain');
-const previewTitle = document.getElementById('preview-title');
-const previewDesc = document.getElementById('preview-desc');
 
 // Meta cards
 const valueTitle = document.getElementById('value-title');
@@ -32,8 +30,9 @@ const copyDescBtn = document.getElementById('copy-desc');
 const valueOgImage = document.getElementById('value-og-image');
 const badgeOgImage = document.getElementById('badge-og-image');
 const ogImageDims = document.getElementById('og-image-dims');
-const copyOgImageBtn = document.getElementById('copy-og-image');
-const openOgImageBtn = document.getElementById('open-og-image');
+const previewImgActions = document.getElementById('preview-img-actions');
+const downloadImgBtn = document.getElementById('download-img');
+const copyImgUrlBtn = document.getElementById('copy-img-url');
 
 // ─── Suggestions ───────────────────────────────────────────────────────────
 
@@ -282,6 +281,24 @@ function detectOgImageDims(url) {
   });
 }
 
+async function downloadImage(url) {
+  const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(url)}`;
+  try {
+    const res = await fetch(proxyUrl);
+    if (!res.ok) throw new Error('proxy failed');
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    const ext = blob.type.split('/')[1]?.replace('jpeg', 'jpg') || 'jpg';
+    const filename = (new URL(url).hostname) + '-preview.' + ext;
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch {
+    window.open(url, '_blank');
+  }
+}
+
 // ─── Results rendering ─────────────────────────────────────────────────────
 
 function renderResults(data) {
@@ -292,8 +309,6 @@ function renderResults(data) {
 
   // Preview card
   previewDomain.textContent = domain;
-  previewTitle.textContent = title || 'No title found';
-  previewDesc.textContent = desc || 'No description found';
 
   if (ogImage) {
     previewImg.src = ogImage;
@@ -330,24 +345,24 @@ function renderResults(data) {
   copyDescBtn.style.display = desc ? '' : 'none';
   copyDescBtn.onclick = () => copyText(desc, copyDescBtn);
 
-  // OG Image card
+  // Link preview image
   if (ogImage) {
     valueOgImage.textContent = ogImage;
+    valueOgImage.classList.remove('missing');
     badgeOgImage.textContent = 'Found';
     badgeOgImage.className = 'meta-badge badge-good';
-    copyOgImageBtn.style.display = '';
-    copyOgImageBtn.onclick = () => copyText(ogImage, copyOgImageBtn);
-    openOgImageBtn.style.display = '';
-    openOgImageBtn.href = ogImage;
+    previewImgActions.style.display = '';
+    downloadImgBtn.onclick = () => downloadImage(ogImage);
+    copyImgUrlBtn.onclick = () => copyText(ogImage, copyImgUrlBtn);
     detectOgImageDims(ogImage).then(dims => {
       ogImageDims.textContent = dims ? `${dims.w}×${dims.h} px` : '';
     });
   } else {
-    valueOgImage.textContent = 'No OG image found';
+    valueOgImage.textContent = 'No link preview image found';
+    valueOgImage.classList.add('missing');
     badgeOgImage.textContent = 'Missing';
     badgeOgImage.className = 'meta-badge badge-missing';
-    copyOgImageBtn.style.display = 'none';
-    openOgImageBtn.style.display = 'none';
+    previewImgActions.style.display = 'none';
     ogImageDims.textContent = '';
   }
 
