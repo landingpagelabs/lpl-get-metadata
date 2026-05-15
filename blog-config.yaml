@@ -19,7 +19,7 @@ brand_text_strong: Metadata
 brand_mark_svg: |
   <svg class="brand-mark" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
     <rect width="24" height="24" rx="5" fill="#18181b"/>
-    <rect x="4" y="7" width="16" height="2" rx="1" fill="#7c3aed"/>
-    <rect x="4" y="11" width="12" height="2" rx="1" fill="#7c3aed" opacity="0.65"/>
-    <rect x="4" y="15" width="8" height="2" rx="1" fill="#7c3aed" opacity="0.35"/>
+    <rect x="3.5" y="9" width="17" height="6" rx="2" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="5.5" y="11" width="5" height="2" rx="0.75" fill="#7c3aed" opacity="0.5"/>
+    <circle cx="17" cy="12" r="2" fill="#7c3aed"/>
   </svg>

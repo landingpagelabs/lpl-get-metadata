@@ -197,7 +197,7 @@ document.addEventListener('click', e => {
 
 function setLoading(on) {
   checkBtn.disabled = on;
-  btnText.textContent = on ? 'Checking' : 'Check';
+  btnText.textContent = on ? 'Getting' : 'Get';
   btnLoader.classList.toggle('visible', on);
 }
 
