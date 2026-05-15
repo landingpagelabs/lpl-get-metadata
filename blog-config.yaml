@@ -1,0 +1,25 @@
+site_name: Get Metadata
+domain: getmetadata.com
+tool_label: Tool
+blog_tagline: Guides on Open Graph tags, meta descriptions, and social sharing previews.
+blog_description: Practical writing on Open Graph images, meta titles, meta descriptions, and how to debug what your links look like when shared on LinkedIn, Slack, and X.
+
+primary_color: "#7c3aed"
+body_bg: "#fafafa"
+body_color: "#18181b"
+text_muted: "#52525b"
+border: "#e4e4e7"
+surface: "#ffffff"
+
+font_family: "'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+
+brand_text_light: Get
+brand_text_strong: Metadata
+
+brand_mark_svg: |
+  <svg class="brand-mark" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+    <rect width="24" height="24" rx="5" fill="#18181b"/>
+    <rect x="4" y="7" width="16" height="2" rx="1" fill="#7c3aed"/>
+    <rect x="4" y="11" width="12" height="2" rx="1" fill="#7c3aed" opacity="0.65"/>
+    <rect x="4" y="15" width="8" height="2" rx="1" fill="#7c3aed" opacity="0.35"/>
+  </svg>

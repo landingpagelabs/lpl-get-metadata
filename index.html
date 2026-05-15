@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Metadata, check OG image, meta title and description from any URL</title>
+  <meta name="description" content="Paste any URL to instantly see its Open Graph image, meta title, and meta description. Free tool for marketers, SEOs, and developers to debug social sharing previews.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="https://getmetadata.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Get Metadata, check OG image, meta title and description from any URL">
+  <meta property="og:description" content="Paste a URL and instantly see its Open Graph image, meta title, and meta description. Free, no signup.">
+  <meta property="og:url" content="https://getmetadata.com/">
+  <meta property="og:image" content="https://getmetadata.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Screenshot of the Get Metadata tool showing an OG image preview, meta title, and meta description extracted from a website URL">
+  <meta property="og:site_name" content="Get Metadata">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Get Metadata, check OG image, meta title and description from any URL">
+  <meta name="twitter:description" content="Paste a URL and instantly see its Open Graph image, meta title, and meta description. Free, no signup.">
+  <meta name="twitter:image" content="https://getmetadata.com/og-image.jpg">
+  <meta name="twitter:image:alt" content="Screenshot of the Get Metadata tool showing an OG image preview, meta title, and meta description extracted from a website URL">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Preload critical font -->
+  <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+
+  <style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;src:url('fonts/inter.woff2') format('woff2')}:root{--bg:#ffffff;--bg-raised:#fafafa;--bg-input:#ffffff;--bg-hover:#f4f4f5;--border:#e4e4e7;--border-focus:#d4d4d8;--text:#18181b;--text-muted:#52525b;--text-dim:#71717a;--accent:#7c3aed;--accent-text:#6d28d9;--accent-hover:#5b21b6;--accent-dim:rgba(124,58,237,0.12);--green:#16a34a;--green-bg:rgba(22,163,74,0.1);--yellow:#b45309;--yellow-bg:rgba(180,83,9,0.1);--red:#dc2626;--red-bg:rgba(220,38,38,0.1);--radius:8px;--radius-sm:6px;--font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--transition:150ms ease}*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}.site-nav{width:100%;border-bottom:1px solid var(--border)}.site-nav-inner{max-width:800px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}.site-nav-brand{display:inline-flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-weight:600}.brand-mark{display:block;flex:0 0 22px}.brand-text{font-size:15px;letter-spacing:-0.2px}.brand-text-light{color:var(--text-muted);font-weight:500}.brand-text-strong{color:var(--text);font-weight:700}.site-nav-links{display:flex;gap:20px}.site-nav-link{font-size:14px;color:var(--text-muted);text-decoration:none;font-weight:500;transition:color .15s}.site-nav-link:hover{color:var(--text)}.container{max-width:760px;margin:0 auto;padding:32px 24px 80px;flex:1}.header{max-width:640px;margin:0 auto 40px;padding:40px 0 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}.header h1{font-size:36px;font-weight:700;letter-spacing:-0.6px;line-height:1.1;margin:0}.header p{color:var(--text-muted);font-size:15px;margin:0}.trust-pills{list-style:none;display:flex;gap:6px;flex-wrap:wrap;padding:0;margin:0;font-size:12px;justify-content:center}.trust-pills li{display:inline-flex;align-items:center;padding:4px 10px;background:var(--accent-dim);border-radius:999px;color:var(--accent-text);font-weight:500}@media(max-width:640px){.header h1{font-size:26px}.header{padding:24px 0 8px}}.search-bar{display:flex;gap:8px;margin-bottom:40px}.search-bar input{flex:1;padding:12px 16px;font-size:15px;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-input);color:var(--text);outline:none;transition:border-color var(--transition)}.search-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}.search-bar input::placeholder{color:var(--text-dim)}.search-bar button{padding:12px 24px;font-size:15px;font-weight:600;font-family:var(--font);background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;transition:background var(--transition);display:flex;align-items:center;gap:8px;white-space:nowrap}.search-bar button:hover{background:var(--accent-hover)}.search-bar button:disabled{opacity:.5;cursor:not-allowed}.btn-loader{display:none;animation:spin 1s linear infinite}.btn-loader.visible{display:block}@keyframes spin{to{transform:rotate(360deg)}}.error-msg{color:var(--red);font-size:14px;margin-top:-32px;margin-bottom:24px;display:none}.error-msg.visible{display:block}.results{display:none}.results.visible{display:block}.preview-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:32px}.preview-card-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);padding:12px 16px 0;margin-bottom:8px}.preview-card-inner{padding:0 16px 16px}.preview-img-wrap{width:100%;aspect-ratio:1200/630;background:var(--bg-hover);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;position:relative}.preview-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}.preview-img-missing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text-dim);font-size:13px}.preview-domain{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}.preview-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.preview-desc{font-size:14px;color:var(--text-muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.meta-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px}.meta-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:12px}.meta-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim)}.meta-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px}.badge-good{background:var(--green-bg);color:var(--green)}.badge-warn{background:var(--yellow-bg);color:var(--yellow)}.badge-missing{background:var(--red-bg);color:var(--red)}.meta-value{font-size:14px;color:var(--text);line-height:1.55;margin-bottom:10px;word-break:break-word}.meta-value.missing{color:var(--text-dim);font-style:italic}.meta-footer{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.char-bar-wrap{flex:1;min-width:120px}.char-label{font-size:11px;color:var(--text-dim);margin-bottom:4px}.char-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}.char-fill{height:100%;border-radius:2px;transition:width .3s ease}.fill-good{background:var(--green)}.fill-warn{background:#f59e0b}.fill-over{background:var(--red)}.btn-copy{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;font-size:12px;font-weight:500;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text-muted);cursor:pointer;transition:all var(--transition);white-space:nowrap}.btn-copy:hover{color:var(--text);background:var(--bg-hover);border-color:var(--border-focus)}.btn-copy.copied{color:var(--green);border-color:var(--green)}.btn-open{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;font-size:12px;font-weight:500;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text-muted);cursor:pointer;transition:all var(--transition);text-decoration:none}.btn-open:hover{color:var(--text);background:var(--bg-hover);border-color:var(--border-focus)}.og-image-url{font-size:12px;color:var(--text-muted);word-break:break-all;margin-bottom:10px;line-height:1.5}.og-image-dims{font-size:11px;color:var(--text-dim);margin-bottom:10px}.seo-section{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}.seo-section h2{font-size:20px;font-weight:600;margin-bottom:16px;letter-spacing:-0.3px}.seo-section p{color:var(--text-muted);font-size:15px;margin-bottom:16px;line-height:1.7}.seo-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:14px}.seo-table th{text-align:left;padding:10px 16px;background:var(--bg-raised);border:1px solid var(--border);font-weight:600;font-size:13px;color:var(--text-muted)}.seo-table td{padding:10px 16px;border:1px solid var(--border);color:var(--text-muted)}.seo-table td:first-child{font-family:ui-monospace,'SF Mono','Fira Code',monospace;font-size:12px;color:var(--accent-text);white-space:nowrap}.faq-section{margin-top:48px;padding-top:40px;border-top:1px solid var(--border);max-width:760px}.faq-section h2{font-size:20px;font-weight:600;margin-bottom:16px;letter-spacing:-0.3px}.faq-section details{border-top:1px solid var(--border);padding:14px 0}.faq-section details:last-of-type{border-bottom:1px solid var(--border)}.faq-section summary{cursor:pointer;font-size:15px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}.faq-section summary::-webkit-details-marker{display:none}.faq-section summary::after{content:'+';font-size:22px;color:var(--text-dim);line-height:1}.faq-section details[open] summary::after{content:'\2013'}.faq-section details p{margin-top:10px;font-size:14px;color:var(--text-muted);line-height:1.7}.faq-section code{font-family:ui-monospace,'SF Mono','Fira Code',monospace;font-size:12px;background:var(--bg-raised);padding:1px 5px;border-radius:3px}.sister-tools{padding:48px 0 16px;border-top:1px solid var(--border)}.sister-tools h2{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:18px}.sister-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:stretch}.sister-list li{display:flex}.sister-list a{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;transition:border-color .15s,background-color .15s;width:100%;min-height:80px}.sister-list a:hover{border-color:var(--accent-text);background:var(--bg-input)}.sister-logo{flex:0 0 28px;width:28px;height:28px;display:block}.sister-meta{display:flex;flex-direction:column;gap:3px;min-width:0}.sister-name{font-size:14px;font-weight:600;color:var(--text)}.sister-desc{font-size:12px;color:var(--text-muted);line-height:1.45}@media(max-width:768px){.sister-list{grid-template-columns:1fr 1fr}}@media(max-width:480px){.sister-list{grid-template-columns:1fr}}.footer{padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--text-dim)}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.footer p{margin:0}.footer-lpl{display:inline-flex;align-items:center;gap:8px;color:var(--text-muted);text-decoration:none}.footer-lpl img{height:22px;width:auto;display:block}.footer-lpl:hover{color:var(--text)}.footer a{color:var(--text-muted);text-decoration:underline;text-underline-offset:2px}.footer a:hover{color:var(--text)}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:640px){.container{padding:32px 16px 64px}.search-bar{flex-direction:column}.search-bar button{justify-content:center;min-height:48px}.search-bar input{font-size:16px;min-height:48px}.seo-table{display:block;overflow-x:auto}}</style>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://getmetadata.com/#app",
+        "name": "Get Metadata",
+        "url": "https://getmetadata.com/",
+        "description": "Paste any URL to instantly see its Open Graph image, meta title, and meta description. Free tool for marketers, SEOs, and developers.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript and a modern browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "creator": { "@type": "Organization", "name": "Landing Page Labs", "url": "https://www.landingpagelabs.co" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://getmetadata.com/#site",
+        "url": "https://getmetadata.com/",
+        "name": "Get Metadata",
+        "publisher": { "@type": "Organization", "name": "Landing Page Labs", "url": "https://www.landingpagelabs.co" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is an Open Graph image?",
+            "acceptedAnswer": { "@type": "Answer", "text": "An Open Graph image is the preview image that appears when a link is shared on social media platforms like LinkedIn, Twitter/X, Facebook, and Slack. It is set via the og:image meta tag in a page's HTML head. The recommended size is 1200x630 pixels." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the ideal meta title length?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Google typically displays 50 to 60 characters of a page title in search results. Titles longer than 60 characters may be truncated with an ellipsis. Aim for titles that fit within this range while accurately describing the page." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the ideal meta description length?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Google typically shows 150 to 160 characters of a meta description in search results. Descriptions longer than 160 characters may be cut off. Write descriptions that summarise the page clearly within this range." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my OG image not showing when I share a link?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Social platforms cache OG data. After updating your og:image tag, use the platform's URL debugger (Facebook Sharing Debugger, LinkedIn Post Inspector) to force a cache refresh. Also ensure the image URL is absolute (starts with https://) and the image is publicly accessible." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Get Metadata store any data?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. The tool fetches the URL server-side and returns the extracted metadata directly to your browser. Nothing is logged or stored." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="site-nav-inner">
+      <a class="site-nav-brand" href="/" aria-label="Get Metadata home">
+        <svg class="brand-mark" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="5" fill="#18181b"/>
+          <rect x="4" y="7" width="16" height="2" rx="1" fill="#7c3aed"/>
+          <rect x="4" y="11" width="12" height="2" rx="1" fill="#7c3aed" opacity="0.65"/>
+          <rect x="4" y="15" width="8" height="2" rx="1" fill="#7c3aed" opacity="0.35"/>
+        </svg>
+        <span class="brand-text"><span class="brand-text-light">Get</span> <span class="brand-text-strong">Metadata</span></span>
+      </a>
+      <div class="site-nav-links">
+        <a href="/blog" class="site-nav-link">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- Hero -->
+    <header class="header">
+      <h1>Check any URL's OG image, title and description</h1>
+      <p>Paste a link and instantly see how it looks when shared on LinkedIn, Slack, and X.</p>
+      <ul class="trust-pills" aria-label="What we do not do">
+        <li>Free, no signup</li>
+        <li>No data stored</li>
+        <li>Server-side fetch</li>
+      </ul>
+    </header>
+
+    <!-- Search -->
+    <form id="check-form" class="search-bar" autocomplete="off">
+      <label for="url-input" class="visually-hidden">Website URL</label>
+      <input
+        type="text"
+        id="url-input"
+        name="url"
+        placeholder="Paste a URL, e.g. stripe.com"
+        inputmode="url"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        autofocus
+        required
+      >
+      <button type="submit" id="check-btn">
+        <span id="btn-text">Check</span>
+        <svg id="btn-loader" class="btn-loader" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" focusable="false" aria-hidden="true">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+      </button>
+    </form>
+
+    <p id="error-msg" class="error-msg" role="alert"></p>
+
+    <!-- Results -->
+    <div id="results" class="results" aria-live="polite">
+
+      <!-- Social preview card -->
+      <div class="preview-card">
+        <div class="preview-card-label">Link preview</div>
+        <div class="preview-card-inner">
+          <div class="preview-img-wrap" id="preview-img-wrap">
+            <img id="preview-img" src="" alt="Open Graph preview image" loading="lazy" style="display:none">
+            <div id="preview-img-missing" class="preview-img-missing">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>No OG image found</span>
+            </div>
+          </div>
+          <div id="preview-domain" class="preview-domain"></div>
+          <div id="preview-title" class="preview-title"></div>
+          <div id="preview-desc" class="preview-desc"></div>
+        </div>
+      </div>
+
+      <!-- Meta Title card -->
+      <div class="meta-card" id="card-title">
+        <div class="meta-card-header">
+          <span class="meta-label">Meta title</span>
+          <span id="badge-title" class="meta-badge"></span>
+        </div>
+        <div id="value-title" class="meta-value"></div>
+        <div class="meta-footer">
+          <div class="char-bar-wrap">
+            <div class="char-label" id="char-label-title"></div>
+            <div class="char-bar"><div id="char-fill-title" class="char-fill"></div></div>
+          </div>
+          <button class="btn-copy" id="copy-title" type="button">Copy</button>
+        </div>
+      </div>
+
+      <!-- Meta Description card -->
+      <div class="meta-card" id="card-desc">
+        <div class="meta-card-header">
+          <span class="meta-label">Meta description</span>
+          <span id="badge-desc" class="meta-badge"></span>
+        </div>
+        <div id="value-desc" class="meta-value"></div>
+        <div class="meta-footer">
+          <div class="char-bar-wrap">
+            <div class="char-label" id="char-label-desc"></div>
+            <div class="char-bar"><div id="char-fill-desc" class="char-fill"></div></div>
+          </div>
+          <button class="btn-copy" id="copy-desc" type="button">Copy</button>
+        </div>
+      </div>
+
+      <!-- OG Image card -->
+      <div class="meta-card" id="card-og-image">
+        <div class="meta-card-header">
+          <span class="meta-label">OG image</span>
+          <span id="badge-og-image" class="meta-badge"></span>
+        </div>
+        <div id="value-og-image" class="og-image-url"></div>
+        <div id="og-image-dims" class="og-image-dims"></div>
+        <div class="meta-footer">
+          <button class="btn-copy" id="copy-og-image" type="button">Copy URL</button>
+          <a id="open-og-image" class="btn-open" href="#" target="_blank" rel="noopener" style="display:none">
+            Open image
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <!-- /results -->
+
+    <!-- SEO content -->
+    <section class="seo-section" aria-labelledby="seo-heading">
+      <h2 id="seo-heading">What are Open Graph tags and meta tags?</h2>
+      <p>
+        When someone shares a link on LinkedIn, Slack, X, or Facebook, those platforms read a set of hidden HTML tags in the page's <code>&lt;head&gt;</code> to generate the preview card — the image, title, and description that appear before someone clicks. These are called Open Graph tags (created by Facebook) and standard HTML meta tags.
+      </p>
+      <p>
+        Get Metadata fetches any URL server-side and extracts these tags so you can verify what your pages look like when shared, debug missing images, and fix titles or descriptions that are too long, too short, or missing entirely.
+      </p>
+
+      <table class="seo-table">
+        <thead>
+          <tr>
+            <th scope="col">Tag</th>
+            <th scope="col">What it controls</th>
+            <th scope="col">Recommended length</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>og:title / title</td>
+            <td>The page title in search results and social previews</td>
+            <td>50–60 characters</td>
+          </tr>
+          <tr>
+            <td>og:description / description</td>
+            <td>The snippet shown under the title in search and social</td>
+            <td>150–160 characters</td>
+          </tr>
+          <tr>
+            <td>og:image</td>
+            <td>The preview image when a link is shared on social media</td>
+            <td>1200×630 px, under 8 MB</td>
+          </tr>
+          <tr>
+            <td>og:type</td>
+            <td>Content type (website, article, product, etc.)</td>
+            <td>website for most pages</td>
+          </tr>
+          <tr>
+            <td>twitter:card</td>
+            <td>Preview card style on X (Twitter)</td>
+            <td>summary_large_image recommended</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Frequently asked questions</h2>
+      <details>
+        <summary>What is an Open Graph image?</summary>
+        <p>An Open Graph image is the preview image that appears when a link is shared on social media platforms like LinkedIn, X, Facebook, and Slack. It is set via the <code>og:image</code> meta tag in a page's HTML head. The recommended size is 1200×630 pixels.</p>
+      </details>
+      <details>
+        <summary>What is the ideal meta title length?</summary>
+        <p>Google typically displays 50 to 60 characters of a page title in search results. Titles longer than 60 characters may be truncated with an ellipsis. Aim for titles that fit within this range while accurately describing the page.</p>
+      </details>
+      <details>
+        <summary>What is the ideal meta description length?</summary>
+        <p>Google typically shows 150 to 160 characters of a meta description in search results. Descriptions longer than 160 characters may be cut off. Write descriptions that summarise the page clearly within this range.</p>
+      </details>
+      <details>
+        <summary>Why is my OG image not showing when I share a link?</summary>
+        <p>Social platforms cache OG data. After updating your <code>og:image</code> tag, use the platform's URL debugger (Facebook Sharing Debugger, LinkedIn Post Inspector) to force a cache refresh. Also ensure the image URL is absolute (starts with <code>https://</code>) and the image is publicly accessible.</p>
+      </details>
+      <details>
+        <summary>Does Get Metadata store any data?</summary>
+        <p>No. The tool fetches the URL server-side and returns the extracted metadata directly to your browser. Nothing is logged or stored.</p>
+      </details>
+    </section>
+
+    <!-- Sister tools -->
+    <section class="sister-tools" aria-labelledby="sister-heading">
+      <h2 id="sister-heading">More free tools from Landing Page Labs</h2>
+      <ul class="sister-list">
+        <li>
+          <a href="https://svgscraper.com/?utm_source=getmetadata.com&amp;utm_medium=referral&amp;utm_campaign=lpl-tools&amp;utm_content=sister-tools-card" target="_blank" rel="noopener">
+            <svg class="sister-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5" fill="#2563eb"/>
+              <path d="M7 17 L12 7 L17 17 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="1.4" fill="#fff"/>
+              <circle cx="7" cy="17" r="0.9" fill="#fff"/>
+              <circle cx="17" cy="17" r="0.9" fill="#fff"/>
+              <circle cx="12" cy="7" r="0.9" fill="#fff"/>
+            </svg>
+            <div class="sister-meta">
+              <span class="sister-name">SVG Scraper</span>
+              <span class="sister-desc">Extract every SVG from a site</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="https://inspectbrand.com/?utm_source=getmetadata.com&amp;utm_medium=referral&amp;utm_campaign=lpl-tools&amp;utm_content=sister-tools-card" target="_blank" rel="noopener">
+            <svg class="sister-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5" fill="#111"/>
+              <circle cx="11" cy="9" r="3.5" fill="none" stroke="#fff" stroke-width="2"/>
+              <line x1="13.6" y1="11.6" x2="16.5" y2="14.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="6.5" cy="18" r="2.2" fill="#FF6B6B"/>
+              <circle cx="12" cy="18" r="2.2" fill="#4ECDC4"/>
+              <circle cx="17.5" cy="18" r="2.2" fill="#FFD43B"/>
+            </svg>
+            <div class="sister-meta">
+              <span class="sister-name">Inspect Brand</span>
+              <span class="sister-desc">Favicons, colors, fonts</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="https://downloadhtml.com/?utm_source=getmetadata.com&amp;utm_medium=referral&amp;utm_campaign=lpl-tools&amp;utm_content=sister-tools-card" target="_blank" rel="noopener">
+            <svg class="sister-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5" fill="#0a0a0a"/>
+              <path d="M9 8 L5 12 L9 16" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15 8 L19 12 L15 16" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 6.5 L10 17.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+            <div class="sister-meta">
+              <span class="sister-name">Download HTML</span>
+              <span class="sister-desc">View and download source</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="https://makeutms.com/?utm_source=getmetadata.com&amp;utm_medium=referral&amp;utm_campaign=lpl-tools&amp;utm_content=sister-tools-card" target="_blank" rel="noopener">
+            <svg class="sister-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5" fill="#0a0a0b"/>
+              <line x1="3.5" y1="12" x2="9" y2="12" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round"/>
+              <rect x="9.5" y="9.5" width="4" height="5" rx="1.2" fill="#f59e0b"/>
+              <rect x="14.5" y="9.5" width="3" height="5" rx="1.2" fill="#f59e0b" opacity="0.65"/>
+              <rect x="18.5" y="9.5" width="2" height="5" rx="1" fill="#f59e0b" opacity="0.4"/>
+            </svg>
+            <div class="sister-meta">
+              <span class="sister-name">Make UTMs</span>
+              <span class="sister-desc">UTM campaign URL builder</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="https://fontcompressor.com/?utm_source=getmetadata.com&amp;utm_medium=referral&amp;utm_campaign=lpl-tools&amp;utm_content=sister-tools-card" target="_blank" rel="noopener">
+            <svg class="sister-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5" fill="#2563eb"/>
+              <text x="12" y="17" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">F</text>
+            </svg>
+            <div class="sister-meta">
+              <span class="sister-name">Font Compressor</span>
+              <span class="sister-desc">Compress fonts to WOFF2</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <p>Free metadata checker. <a href="/blog">Read the blog</a> or <a href="/">check another URL</a>.</p>
+        <a class="footer-lpl" href="https://links.landingpagelabs.co/getmetadata" target="_blank" rel="noopener">
+          <span>Built by</span>
+          <img src="https://landing-page-labs.b-cdn.net/LPLabsLogo-NavBar.svg" alt="Landing Page Labs" height="22" width="100" loading="lazy" decoding="async">
+        </a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
